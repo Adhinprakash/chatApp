@@ -5,6 +5,7 @@ import 'package:firebase_demo/utilits/utils.dart';
 import 'package:firebase_demo/view/auth/verifycode.dart';
 import 'package:firebase_demo/widgets/round_button.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class LoginWithPhonenumber extends StatefulWidget {
   const LoginWithPhonenumber({super.key});
@@ -31,6 +32,8 @@ final _auth =FirebaseAuth.instance;
        ),
        body: Column(
         children: [
+
+        
           TextFormField(
             keyboardType: TextInputType.number,
 controller: phonenumbercontroller,

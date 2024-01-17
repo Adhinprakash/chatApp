@@ -5,6 +5,7 @@ import 'package:firebase_demo/view/post/post_screen.dart';
 import 'package:firebase_demo/widgets/round_button.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:lottie/lottie.dart';
 class Signupscreen extends StatefulWidget {
   const Signupscreen({super.key});
 
@@ -17,6 +18,7 @@ class _SignupscreenState extends State<Signupscreen> {
   final _formkey=GlobalKey<FormState>() ;
   final emailcontroller=TextEditingController();
   final passwordcontroller=TextEditingController();
+    final _confirmpasswordcontroller=TextEditingController();
 final  _auth=FirebaseAuth.instance;
 
 @override
@@ -32,7 +34,9 @@ final  _auth=FirebaseAuth.instance;
     setState(() {
   loading =true;
 });
-  try{
+
+ if(passwordcontroller==_confirmpasswordcontroller){
+   try{
 authservices.signupwithEmailPassword(emailcontroller.text.toString(), passwordcontroller.text.toString()).then((value) {setState(() {
   loading=false;
 });
@@ -46,6 +50,9 @@ authservices.signupwithEmailPassword(emailcontroller.text.toString(), passwordco
 loading=false;
 
   }
+ }else{
+  Utils().toastmessage("password don't match!");
+ }
         // setState(() {
         //                     loading=true;
         //                   });
@@ -68,11 +75,7 @@ loading=false;
   Widget build(BuildContext context) {
     
     return  Scaffold(
-      appBar: AppBar(
-         backgroundColor: Colors.deepPurple,
-         centerTitle:true,
-         title: const Text("Sign up",style: TextStyle(color: Colors.white),),
-      ),
+     
       
       body: SafeArea(
         child: Padding(
@@ -82,6 +85,13 @@ loading=false;
             crossAxisAlignment: CrossAxisAlignment.center,
              children: [
 
+ SizedBox(
+                height: 200,
+                width: 300,
+                child: Lottie.asset("assets/animations/Animation - 1705482962896.json",)),
+                SizedBox(height: 20,),
+              
+         
               Form(
                 key: _formkey,
                 child: Column(children: [
@@ -96,7 +106,7 @@ loading=false;
                         cursorColor: Colors.black,
                         style: const TextStyle(color: Colors.black),
                         decoration: InputDecoration(
-                        
+                         hintText: "Email",
                           border: OutlineInputBorder(
                             
                               borderRadius: BorderRadius.circular(10)),
@@ -122,7 +132,7 @@ TextFormField(
                       cursorColor: Colors.black,
                       style: const TextStyle(color: Colors.black),
                       decoration: InputDecoration(
-                      
+                       hintText: "password ",
                         border: OutlineInputBorder(
                           
                             borderRadius: BorderRadius.circular(10)),
@@ -134,13 +144,39 @@ TextFormField(
                         ),
                       ),
                     ),
+                      
+          const SizedBox(height: 20,),
+TextFormField(
+  controller:_confirmpasswordcontroller,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Password is required';
+                        }
+                        return null;
+                      },
+                      cursorColor: Colors.black,
+                      style: const TextStyle(color: Colors.black),
+                      decoration: InputDecoration(
+                      hintText: "confirm password ",
+                        border: OutlineInputBorder(
+                          
+                            borderRadius: BorderRadius.circular(10)),
+                        prefixIcon: const Icon(Icons.lock_open_rounded),
+                        labelStyle: const TextStyle(color: Colors.black),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: Colors.black),
+                        ),
+                      ),
+                    ),
+
               ],)),
             
                       const SizedBox(height: 20,),
 
                        RoundButton(
                         loading: loading,
-                        buttoncolor: Colors.deepPurple, textcolor: Colors.white, title: "SignUp",
+                        buttoncolor: Theme.of(context).colorScheme.primary, textcolor: Colors.white, title: "SignUp",
                        ontap: ()async{
                         if(_formkey.currentState!.validate()){
                       signup();

@@ -7,6 +7,7 @@ import 'package:firebase_demo/view/auth/signup_screen.dart';
 import 'package:firebase_demo/view/post/post_screen.dart';
 import 'package:firebase_demo/widgets/round_button.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class LogiScreen extends StatefulWidget {
   const LogiScreen({super.key});
@@ -42,32 +43,13 @@ authservices.signinwithEmailpassword(emailcontroller.text.toString(), passwordco
 loading=false;
 
   }
-    // setState(() {
-    //   loading = true;
-    // });
-    // _auth
-    //     .signInWithEmailAndPassword(
-    //         email: emailcontroller.text,
-    //         password: passwordcontroller.text.toString())
-    //     .then((value) {
-    //   setState(() {
-    //     loading = false;
-    //   });
-    //   Utils().toastmessage(value.user!.email.toString());
-      // Navigator.push(
-      //     context, MaterialPageRoute(builder: (context) => const PostScreen()));
-    // }).onError((error, stackTrace) {
-    //   loading = false;
-    //   Utils().toastmessage(error.toString());
-    // });
+   
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.deepPurple,
-      ),
+    backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -75,6 +57,13 @@ loading=false;
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+
+
+              SizedBox(
+                height: 200,
+                width: 200,
+                child: Lottie.asset("assets/animations/Animation - 1705480449535.json")),
+                SizedBox(height: 20,),
               Form(
                   key: _formkey,
                   child: Column(
@@ -87,9 +76,11 @@ loading=false;
                           }
                           return null;
                         },
+                        
                         cursorColor: Colors.black,
                         style: const TextStyle(color: Colors.black),
                         decoration: InputDecoration(
+                          hintText: "Email",
                             prefixIcon: Icon(Icons.email_outlined),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10)),
@@ -99,11 +90,13 @@ loading=false;
                               borderSide: const BorderSide(color: Colors.black),
                             ),
                             fillColor: Colors.white),
+                          
                       ),
                       SizedBox(
                         height: 20,
                       ),
                       TextFormField(
+                        
                         controller: passwordcontroller,
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -114,6 +107,7 @@ loading=false;
                         cursorColor: Colors.black,
                         style: const TextStyle(color: Colors.black),
                         decoration: InputDecoration(
+                          hintText: "Password",
                             prefixIcon: const Icon(Icons.lock_open),
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10)),
@@ -131,7 +125,7 @@ loading=false;
               ),
               RoundButton(
                   loading: loading,
-                  buttoncolor: Colors.deepPurple,
+                  buttoncolor: Theme.of(context).colorScheme.primary,
                   textcolor: Colors.white,
                   title: "Login",
                   ontap: () {
@@ -150,7 +144,7 @@ loading=false;
                             MaterialPageRoute(
                                 builder: (context) => Signupscreen()));
                       },
-                      child: const Text("SignUp"))
+                      child: const Text("SignUp",style: TextStyle(color: Colors.grey),))
                 ],
               ),
               SizedBox(
